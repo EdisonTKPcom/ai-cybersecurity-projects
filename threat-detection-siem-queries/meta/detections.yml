@@ -1,0 +1,23 @@
+# Detection metadata index
+# id: unique identifier
+# platform: splunk|elastic|sentinel
+# tactic: MITRE ATT&CK tactic ID (e.g., TA0003)
+# technique: technique ID (e.g., T1059)
+# severity: low|medium|high|critical
+# filepath: relative path to query file
+
+- id: PROC-POWERSHELL-ENCODED
+  name: Suspicious Encoded PowerShell
+  platform: splunk
+  tactic: TA0002
+  technique: T1059.001
+  severity: high
+  filepath: queries/splunk/encoded_powershell.spl
+
+- id: AUTH-MULTI-FAIL
+  name: Multiple Authentication Failures Followed by Success
+  platform: sentinel
+  tactic: TA0006
+  technique: T1110
+  severity: medium
+  filepath: queries/sentinel/multi_fail_then_success.kql

@@ -1,0 +1,6 @@
+index=windows EventCode=4104 OR (sourcetype=WinEventLog:Security EventCode=4688)
+| eval cmd=coalesce(ScriptBlockText, CommandLine)
+| where like(cmd, "%-enc%") OR like(cmd, "%-e %")
+| where match(cmd, "[A-Za-z0-9+/]{20,}={0,2}")
+| stats values(cmd) as sample_commands count by Computer, User
+| rename Computer as host, User as user

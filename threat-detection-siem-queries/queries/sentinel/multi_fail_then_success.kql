@@ -1,0 +1,10 @@
+SigninLogs
+| where ResultType in (50053, 50126, 50055) // failures
+| summarize fails=count() by UserPrincipalName, bin(TimeGenerated, 30m)
+| join kind=inner (
+    SigninLogs
+    | where ResultType == 0
+    | project UserPrincipalName, SuccessTime=TimeGenerated
+) on UserPrincipalName
+| where SuccessTime between (TimeGenerated) and (TimeGenerated + 30m)
+| project UserPrincipalName, fails, SuccessTime, FailWindowStart=TimeGenerated
